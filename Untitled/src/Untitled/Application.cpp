@@ -15,6 +15,7 @@ namespace unt
 
 	Application::Application()
 	{
+		Log::init();
 	}
 
 }

@@ -6,4 +6,4 @@ public:
 
 };
 
-SET_APPLICATION(Sandbox);
+UNT_SET_APPLICATION(Sandbox);
