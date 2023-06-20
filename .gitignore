@@ -1,0 +1,13 @@
+**/bin/
+bin_int/
+int/
+
+*.log
+
+# Visual Studio files and folder
+.vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+**.csproj
