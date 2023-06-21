@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 #include "Event.h"
 
 namespace unt 
@@ -18,7 +19,7 @@ namespace unt
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseMoved: " << (float)x << ", " << (float)y;
+			ss << getName() << " - " << (float)x << ", " << (float)y;
 			return ss.str();
 		}
 
@@ -39,7 +40,7 @@ namespace unt
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseScrolled: " << (float)xoff << ", " << (float)yoff;
+			ss << getName() << " - " << (float)xoff << ", " << (float)yoff;
 			return ss.str();
 		}
 
@@ -53,36 +54,30 @@ namespace unt
 	public:
 		inline int32_t getMouseButton() const { return button; }
 
+		std::string toString() const override
+		{
+			std::stringstream ss;
+			ss << getName() << " - " << button;
+			return ss.str();
+		}
+
 		UNT_SET_EVENT_CATEGORY(Input | Mouse | MouseButton)
 	protected:
-		MouseButtonEvent(int32_t button) : button(button) {}
+		MouseButtonEvent(int button) : button(button) {}
 
-		int32_t button;
+		int button;
 	};
 
 	class MouseButtonPressed : public MouseButtonEvent
 	{
 	public:
-		MouseButtonPressed(int32_t button) : MouseButtonEvent(button) {}
-
-		std::string toString() const override
-		{
-			std::stringstream ss;
-			ss << "MouseButtonPressed: " << button;
-			return ss.str();
-		}
+		MouseButtonPressed(int button) : MouseButtonEvent(button) {}
 	};
 
 	class MouseButtonReleased : public MouseButtonEvent
 	{
-		MouseButtonReleased(int32_t button) : MouseButtonEvent(button) {}
-
-		std::string toString() const override
-		{
-			std::stringstream ss;
-			ss << "MouseButtonPressed: " << button;
-			return ss.str();
-		}
+	public:
+		MouseButtonReleased(int button) : MouseButtonEvent(button) {}
 	};
 
 }

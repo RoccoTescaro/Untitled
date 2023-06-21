@@ -1,4 +1,5 @@
 base_path = "../"
+project_path = base_path .. "%{prj.name}"
 
 workspace "Untitled"
     location (base_path)
@@ -11,6 +12,19 @@ workspace "Untitled"
     language "C++"
     cppdialect "C++20"
     systemversion "latest"
+
+    files 
+    {
+        project_path .. "/**.h",
+        project_path .. "/**.cpp", 
+    }
+
+    includedirs
+    {
+        base_path .. "Untitled/src",
+        base_path .. "lib/spdlog/include",
+        base_path .. "lib/glfw/include",
+    }
 
     filter "configurations:Debug"
         defines "UNT_DEBUG"
@@ -28,42 +42,23 @@ workspace "Untitled"
         runtime "Release"
         optimize "on"
 
-project_path = base_path .. "%{prj.name}"
 
 project "Untitled"
     location (project_path)
     kind "StaticLib"
-    
-    files 
-    {
-        project_path .. "/src/**.h",
-        project_path .. "/src/**.cpp", 
-    }
 
-    includedirs
-    {
-        project_path .. "/src",
-        project_path .. "/lib/spdlog/include"
-    }
+    pchheader "pch.h"
+    pchsource (project_path .. "/src/pch.cpp")
+
+    links { "spdlog", "glfw", "opengl32.lib" }
+
 
 project "Sandbox"
     location (project_path)
     kind "ConsoleApp"
     
-    files 
-    {
-        project_path .. "/src/**.h",
-        project_path .. "/src/**.cpp", 
-    }
+    links { "Untitled" }
 
-    includedirs
-    {
-        base_path .. "Untitled/src",
-        base_path .. "Untitled/lib/spdlog/include" -- why ? --
-    }
 
-    links
-    {
-        "Untitled"
-    }
-
+include (base_path .. "lib/spdlog")
+include (base_path .. "lib/glfw")

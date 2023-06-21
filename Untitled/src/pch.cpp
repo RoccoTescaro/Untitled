@@ -1,0 +1,6 @@
+
+//REQUIRED BY VISUAL STUDIO COMPILER!//
+
+#include "pch.h"
+
+//////////////////////////////////////

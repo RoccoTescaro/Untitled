@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Untitled/Core.h"
-#include "Untitled/Log.h"
-#include "Untitled/Application.h"
+#include "Untitled/Core/Macro.h"
+#include "Untitled/Core/Log.h"
+#include "Untitled/Core/Application.h"
 
-#include "Untitled/EntryPoint.h"
+#include "Untitled/Core/EntryPoint.h"

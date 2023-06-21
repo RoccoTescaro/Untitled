@@ -1,6 +1,5 @@
 #pragma once
-#include <cstdint>
-#include "Untitled/Core.h"
+#include "pch.h"
 
 namespace unt 
 {
@@ -22,7 +21,7 @@ namespace unt
 		};
 		
 		inline virtual uint8_t getCategory() const = 0;
-		inline virtual const char* getName() const { return typeid(this).name(); };
+		inline virtual const char* getName() const { return typeid(*this).name(); };
 
 		template<Category C>
 		inline bool in()
