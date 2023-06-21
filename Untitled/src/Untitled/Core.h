@@ -1,6 +1,7 @@
 #pragma once
 
 //define global macros
+#define BIT(x) (1 << x)
 
 #define UNT_STRINGIFY(x) #x
 
