@@ -3,6 +3,7 @@
 #include "../Events/Event.h"
 #include "../Events/WindowEvent.h"
 #include "Window.h"
+#include "Layer.h"
 
 namespace unt 
 {
@@ -10,13 +11,19 @@ namespace unt
 	class Application
 	{
 	public:
-		static Application& get();
+		inline static Application* get() { return instance; };
 
-		virtual ~Application() = default;
+		virtual ~Application();
 
 		void onEvent(Event& e);
 
 		void run();
+
+		void pushLayer(Layer* layer);
+		void popLayer();
+		void insertLayer(Layer* layer, uint8_t index);
+		void eraseLayer(uint8_t index);
+
 	protected:
 		Application();
 
@@ -26,9 +33,11 @@ namespace unt
 
 		bool onWindowClose(WindowClosed& e);
 
-		std::unique_ptr<Window> window;
-
 		bool running = true;
+		
+		std::unique_ptr<Window> window;
+		
+		std::vector<Layer*> layers;
 	};
 
 }

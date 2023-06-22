@@ -7,20 +7,26 @@
 
 namespace unt
 {
-
-	Application& Application::get()
+	Application::~Application()
 	{
-		return *instance;
-	}
+		for (auto layer : layers)
+		{
+			layer->onDetach();
+			delete layer;
+		}
+	};
 
 	void Application::onEvent(Event& e)
 	{
-		UNT_TRACE(ENGINE, "{0}", e);
-
 		e.dispatch<WindowClosed>(UNT_BIND_EVENT_FN(Application::onWindowClose));
 		e.dispatch<WindowResized>(UNT_BIND_EVENT_FN(Application::onWindowResize));
-
-		//layer propagation of e
+		
+		for (auto it = layers.rbegin(); it != layers.rend(); ++it)
+		{
+			if (e.isHandled())
+				break;
+			(*it)->onEvent(e);
+		}
 	}
 
 	void Application::run()
@@ -30,17 +36,42 @@ namespace unt
 			glClearColor(0.1f,0.1f,0.1f,1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 			window->onUpdate();
+
+			for (Layer* layer : layers)
+				layer->onUpdate();
 		}
+	}
+
+	void Application::pushLayer(Layer* layer)
+	{
+		layer->onAttach();
+		layers.push_back(layer);  
+	}
+
+	void Application::popLayer()
+	{
+		Layer* layer = layers.back(); 
+		layer->onDetach();
+		layers.pop_back();
+	}
+
+	void Application::insertLayer(Layer* layer, uint8_t index)
+	{
+		layer->onAttach();
+		layers.insert(layers.begin() + index, layer);
+	}
+
+	void Application::eraseLayer(uint8_t index)
+	{
+		Layer* layer = layers[index];
+		layer->onDetach();
+		layers.erase(layers.begin() + index);
 	}
 
 	Application::Application()
 	{
 		Log::init();
-		UNT_INFO(ENGINE, "Log initialized!");
-		
 		window = static_cast<std::unique_ptr<Window>>(new Window());
-		UNT_INFO(ENGINE, "Created window!");
-		
 		window->setEventCallback(UNT_BIND_EVENT_FN(Application::onEvent));
 	}
 
