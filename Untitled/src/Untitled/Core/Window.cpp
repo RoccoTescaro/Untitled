@@ -5,7 +5,6 @@
 #include "../Events/MouseEvent.h"
 #include "../Events/KeyboardEvent.h"
 
-
 namespace unt
 {
 	static void glfwErrorCallback(int error, const char* description)

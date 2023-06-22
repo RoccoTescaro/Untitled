@@ -1,5 +1,6 @@
 #pragma once
-#include <GLFW/glfw3.h>
+#define GLFW_INCLUDE_VULKAN //TODO move this
+#include <GLFW/glfw3.h> //TODO move this
 #include "../Events/Event.h"
 
 namespace unt 

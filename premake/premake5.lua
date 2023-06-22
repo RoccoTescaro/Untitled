@@ -24,6 +24,12 @@ workspace "Untitled"
         base_path .. "Untitled/src",
         base_path .. "lib/spdlog/include",
         base_path .. "lib/glfw/include",
+        "C:\\VulkanSDK\\1.3.250.0\\Include", --download VulkanSDK https://vulkan.lunarg.com/sdk/home#windows --
+    }
+
+    links  -- VulkanSDK Lib --
+    {
+        "C:\\VulkanSDK\\1.3.250.0\\Lib\\vulkan-1.lib",
     }
 
     filter "configurations:Debug"
